@@ -1,0 +1,63 @@
+<html>
+  <style>
+    html, table, input {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.3em;
+    }
+    table input {
+      font-size: 1.25em;
+      width: 1.25em;
+      border: 1px solid #000
+    }
+  </style>
+  <body>
+    <table id="main">
+      <tr>
+        <td><table id="col1"></table></td>
+        <td><table id="col2"></table></td>
+        <td><table id="col3"></table></td>
+        <td><table id="col4"></table></td>
+      </tr>
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <script>
+      const numberRange = _.range(0, 10);
+      let lastLeftValue = 10;
+      let lastRightValue = 10;
+      for (let column = 1; column < 5; column += 1) {
+        const columnElement = document.getElementById(`col${column}`);
+
+        for (let row = 0; row < 15; row += 1) {
+          let leftValue = _.sample(numberRange);
+          while (leftValue === lastLeftValue) {
+            leftValue = _.sample(numberRange);
+          }
+
+          let rightValue = _.sample(numberRange);
+          while (rightValue === lastRightValue) {
+            rightValue = _.sample(numberRange);
+          }
+
+          lastLeftValue = leftValue;
+          lastRightValue = rightValue;
+
+          const row = columnElement.insertRow(-1);
+          const leftCell = row.insertCell(0);
+          const operatorCell = row.insertCell(1);
+          const rightCell = row.insertCell(2);
+          const equalsCell = row.insertCell(3);
+          const answerCell = row.insertCell(4);
+
+          leftCell.appendChild(document.createTextNode(leftValue));
+          operatorCell.appendChild(document.createTextNode('+'));
+          rightCell.appendChild(document.createTextNode(rightValue));
+          equalsCell.appendChild(document.createTextNode('='));
+
+          const answerElement = document.createElement('input');
+          answerElement.setAttribute('type', 'text');
+          answerCell.appendChild(answerElement);
+        }
+      }
+    </script>
+  </body>
+</html>
